@@ -4,6 +4,7 @@ import { ArrowUpRight, Check, Radio, ScanLine } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Reveal } from "./reveal";
+import { useLanguage } from "./language-provider";
 
 type Tab = "Mechanical" | "Compute & Sensors" | "Software";
 const tabs: Tab[] = ["Mechanical", "Compute & Sensors", "Software"];
@@ -14,8 +15,9 @@ const fleet = [
 ] as const;
 
 function ProductVisual({ type }: { type: string }) {
-  return <div className="product-visual" role="img" aria-label={`${type} technical product rendering`}><span className="visual-live"><Radio className="size-3" /> UNIT READY</span><ScanLine className="visual-scan" />
-    {type === "amr" && <img className="product-image" src="/images/agilex-scout-mini.webp" alt="AgileX Scout Mini autonomous mobile robot"/>}
+  const { language } = useLanguage();
+  return <div className="product-visual" role="img" aria-label={`${type} technical product rendering`}><span className="visual-live"><Radio className="size-3" /> {language === "zh-Hant" ? "單位就緒" : "UNIT READY"}</span><ScanLine className="visual-scan" />
+    {type === "amr" && <img className="product-image" src="/images/agilex-scout-mini.webp" alt={language === "zh-Hant" ? "AgileX Scout Mini 自主移動機器人" : "AgileX Scout Mini autonomous mobile robot"}/>}
     {type === "dog" && <svg viewBox="0 0 400 210"><path d="M95 69h200l35 31-25 43H118L78 111Z" className="machine-fill"/><circle cx="295" cy="97" r="14" fill="#020617" stroke="#60a5fa" strokeWidth="3"/><path d="m119 137-31 54m72-50-15 51m145-51 17 51m-2-56 47 52" fill="none" stroke="#94a3b8" strokeWidth="13" strokeLinecap="round"/><path d="M71 193h32m28 0h29m133 0h30m18-3h33" stroke="#3b82f6" strokeWidth="8"/></svg>}
     {type === "arm" && <svg viewBox="0 0 400 210"><ellipse cx="202" cy="188" rx="75" ry="17" className="machine-fill"/><path d="M201 180v-52l-39-29 24-54 25 9-15 39 42 31-12 61" fill="none" stroke="#94a3b8" strokeWidth="28" strokeLinecap="round"/><circle cx="174" cy="99" r="17" fill="#2563eb"/><circle cx="200" cy="51" r="16" fill="#2563eb"/><path d="m210 44 53-18" stroke="#94a3b8" strokeWidth="18" strokeLinecap="round"/></svg>}
   </div>;
@@ -23,9 +25,12 @@ function ProductVisual({ type }: { type: string }) {
 
 function FleetCard({ robot }: { robot: typeof fleet[number] }) {
   const [active, setActive] = useState<Tab>("Mechanical");
-  return <article className="fleet-card"><ProductVisual type={robot.visual}/><div className="p-5 sm:p-6"><div className="flex justify-between font-mono text-[10px]"><span className="text-blue-400">{robot.code} · {robot.type}</span><span className="text-emerald-400">● AVAILABLE</span></div><h3 className="mt-3 text-xl font-semibold text-white">{robot.name}</h3><p className="mt-3 min-h-[60px] text-sm leading-6 text-slate-400">{robot.description}</p><div className="spec-tabs mt-5" role="tablist">{tabs.map(tab => <button role="tab" aria-selected={active === tab} type="button" key={tab} className={active === tab ? "active" : ""} onClick={() => setActive(tab)}>{tab}</button>)}</div><motion.dl key={active} initial={{opacity:0,y:5}} animate={{opacity:1,y:0}} className="spec-list">{robot.specs[active].map(([label,value]) => <div key={label}><dt>{label}</dt><dd><Check/>{value}</dd></div>)}</motion.dl><a href="#intake" className="mt-5 flex items-center justify-between border-t border-white/[.07] pt-5 text-sm text-slate-300 hover:text-blue-400">Request this platform <ArrowUpRight className="size-4"/></a></div></article>;
+  const { language } = useLanguage(); const zh = language === "zh-Hant";
+  const tabNames = zh ? { Mechanical: "機械結構", "Compute & Sensors": "運算與感測", Software: "軟體" } : { Mechanical: "Mechanical", "Compute & Sensors": "Compute & Sensors", Software: "Software" };
+  return <article className="fleet-card"><ProductVisual type={robot.visual}/><div className="p-5 sm:p-6"><div className="flex justify-between font-mono text-[10px]"><span className="text-blue-400">{robot.code} · {robot.type}</span><span className="text-emerald-400">● {zh ? "可供應" : "AVAILABLE"}</span></div><h3 className="mt-3 text-xl font-semibold text-white">{robot.name}</h3><p className="mt-3 min-h-[60px] text-sm leading-6 text-slate-400">{zh ? ({ amr: "用於導航、建圖與自主巡檢的差速驅動開發底盤。", dog: "用於地形適應、具身 AI 與感知研究的敏捷運動平台。", arm: "用於力控制、視覺抓取與自動化概念驗證的協作機械臂。" }[robot.visual]) : robot.description}</p><div className="spec-tabs mt-5" role="tablist">{tabs.map(tab => <button role="tab" aria-selected={active === tab} type="button" key={tab} className={active === tab ? "active" : ""} onClick={() => setActive(tab)}>{tabNames[tab]}</button>)}</div><motion.dl key={active} initial={{opacity:0,y:5}} animate={{opacity:1,y:0}} className="spec-list">{robot.specs[active].map(([label,value]) => <div key={label}><dt>{label}</dt><dd><Check/>{value}</dd></div>)}</motion.dl><a href="#intake" className="mt-5 flex items-center justify-between border-t border-white/[.07] pt-5 text-sm text-slate-300 hover:text-blue-400">{zh ? "詢問此平台" : "Request this platform"} <ArrowUpRight className="size-4"/></a></div></article>;
 }
 
 export function FleetCards() {
-  return <section id="fleet" className="border-y border-white/[.06] bg-slate-950/45 py-24 sm:py-32" aria-labelledby="fleet-title"><div className="section-shell"><Reveal><div className="section-heading"><p className="kicker"><span>//</span> HARDWARE_FLEET</p><h2 id="fleet-title">Real platforms. Root-level access.</h2><p className="section-copy">Choose the machine that matches your workload. Every unit arrives calibrated, safety-limited, and ready to join your ROS graph.</p></div></Reveal><div className="mt-12 grid gap-5 lg:grid-cols-3">{fleet.map((robot,index) => <Reveal key={robot.code} delay={index * .08}><FleetCard robot={robot}/></Reveal>)}</div></div></section>;
+  const { language } = useLanguage(); const zh = language === "zh-Hant";
+  return <section id="fleet" className="border-y border-white/[.06] bg-slate-950/45 py-24 sm:py-32" aria-labelledby="fleet-title"><div className="section-shell"><Reveal><div className="section-heading"><p className="kicker"><span>//</span> HARDWARE_FLEET</p><h2 id="fleet-title">{zh ? "真實平台。Root 層級存取。" : "Real platforms. Root-level access."}</h2><p className="section-copy">{zh ? "選擇符合工作負載的機器。每台設備都經過校準、設定安全限制，並可直接加入你的 ROS graph。" : "Choose the machine that matches your workload. Every unit arrives calibrated, safety-limited, and ready to join your ROS graph."}</p></div></Reveal><div className="mt-12 grid gap-5 lg:grid-cols-3">{fleet.map((robot,index) => <Reveal key={robot.code} delay={index * .08}><FleetCard robot={robot}/></Reveal>)}</div></div></section>;
 }

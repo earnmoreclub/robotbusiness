@@ -9,6 +9,9 @@ body { margin: 0; background: var(--bg); color: #e2e8f0; font-family: Inter, Gei
 a, button { transition: color .2s, background .2s, border-color .2s, transform .2s; }
 .section-shell { width: min(1160px, calc(100% - 40px)); margin-inline: auto; }
 .nav-link { color: #94a3b8; font-size: .78rem; font-weight: 600; }.nav-link:hover { color: white; }
+.language-toggle { display: inline-grid; grid-template-columns: repeat(2,auto); align-items: center; border: 1px solid #334155; border-radius: 7px; padding: 2px; background: #080c13; }
+.language-toggle button { min-width: 42px; height: 28px; border-radius: 5px; padding-inline: .45rem; color: #64748b; font: 600 .65rem ui-monospace, SFMono-Regular, Menlo, monospace; }
+.language-toggle button:hover { color: #cbd5e1; }.language-toggle button.active { background: #1e293b; color: #fff; box-shadow: 0 0 0 1px #475569; }
 .logo-mark { position: relative; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #60a5fa; border-radius: 8px; background: #0f1b32; box-shadow: 0 0 22px #2563eb55; transform: rotate(45deg); }.logo-mark i { position: absolute; display: block; width: 11px; height: 11px; border-radius: 50%; background: #60a5fa; }.logo-mark i:first-child { transform: translate(-6px,-6px); }.logo-mark i:last-child { transform: translate(6px,6px); background: #93c5fd; }.logo-mark + span { margin-left: 2px; }
 .button-primary, .button-secondary { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; border-radius: 7px; padding: .75rem 1.05rem; font-size: .78rem; font-weight: 700; }.button-primary { background: var(--blue); color: white; box-shadow: 0 8px 30px #2563eb44; }.button-primary:hover { background: #60a5fa; transform: translateY(-1px); }.button-secondary { border: 1px solid #334155; color: #cbd5e1; background: #0b101a; }.button-secondary:hover { border-color: #60a5fa; color: white; }
 .button-glow { box-shadow: 0 0 0 1px #60a5fa55, 0 0 28px #2563eb42; }
