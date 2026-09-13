@@ -12,9 +12,9 @@ export function IntakeForm() {
     <div className="grid gap-5 sm:grid-cols-2">
       <label>Full Name<input name="name" required autoComplete="name" placeholder="Ada Lovelace" /></label>
       <label>Work / University Email<input name="email" required type="email" autoComplete="email" placeholder="ada@roboticslab.edu" /></label>
-      <label>Hardware Needed<select name="hardware" required defaultValue=""><option value="" disabled>Select platform</option><option>AgileX Scout Mini</option><option>Unitree Go2 Pro</option><option>UR5e Cobot Arm</option><option>Multiple / Not sure</option></select></label>
+      <label>Hardware Category Needed<select name="hardware" required defaultValue=""><option value="" disabled>Select category</option><option>Mobile Chassis (AMR)</option><option>Quadruped</option><option>Cobot Arm</option><option>Multiple / Not sure</option></select></label>
       <label>Estimated Start Date<input name="startDate" required type="date" /></label>
-      <label className="sm:col-span-2">Use Case<textarea name="useCase" required minLength={10} rows={4} placeholder="e.g. Multi-agent SLAM, reinforcement learning, vision grasping..." /></label>
+      <label className="sm:col-span-2">Primary Use Case<select name="useCase" required defaultValue=""><option value="" disabled>Select workload</option><option>SLAM &amp; Navigation</option><option>Reinforcement Learning</option><option>Computer Vision</option><option>Vision Grasping</option><option>Human-Robot Interaction</option><option>Other / Multi-modal</option></select></label>
     </div>
     <p className="mt-4 text-[11px] leading-5 text-slate-600">By submitting, you agree that Big Rocket may contact you about hardware availability. No marketing spam.</p>
     <button type="submit" className="button-primary mt-6 w-full">Send configuration request <ArrowRight className="size-4" /></button>

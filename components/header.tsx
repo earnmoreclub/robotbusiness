@@ -4,7 +4,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "./logo";
 
-const links = [["Hardware Fleet", "#fleet"], ["SDK / Docs", "#docs"], ["Use Cases", "#use-cases"], ["Pricing", "#pricing"]];
+const links = [["Fleet", "#fleet"], ["Architecture", "#architecture"], ["Simulator", "#simulator"], ["Docs / SDK", "#docs"], ["Pricing", "#pricing"]];
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -15,7 +15,7 @@ export function Header() {
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
           {links.map(([label, href]) => <a key={href} href={href} className="nav-link">{label}</a>)}
         </nav>
-        <a href="#intake" className="button-primary hidden lg:inline-flex">Request Dev Kit <span aria-hidden="true">↗</span></a>
+        <a href="#intake" className="button-primary button-glow hidden lg:inline-flex">Request Dev Kit <span aria-hidden="true">↗</span></a>
         <button type="button" className="rounded-lg border border-white/10 p-2 text-slate-300 lg:hidden" aria-label={open ? "Close navigation menu" : "Open navigation menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
