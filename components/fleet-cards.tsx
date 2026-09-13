@@ -15,7 +15,7 @@ const fleet = [
 
 function ProductVisual({ type }: { type: string }) {
   return <div className="product-visual" role="img" aria-label={`${type} technical product rendering`}><span className="visual-live"><Radio className="size-3" /> UNIT READY</span><ScanLine className="visual-scan" />
-    {type === "amr" && <svg viewBox="0 0 400 210"><path d="M86 93 135 57h147l43 35-17 66H102Z" className="machine-fill"/><path d="M112 88h181l-12 42H123Z" fill="#172033" stroke="#64748b"/><rect x="158" y="35" width="91" height="29" rx="8" className="machine-fill"/><ellipse cx="202" cy="36" rx="42" ry="9" fill="#60a5fa"/><circle cx="125" cy="157" r="30"/><circle cx="286" cy="157" r="30"/></svg>}
+    {type === "amr" && <img className="product-image" src="/images/agilex-scout-mini.webp" alt="AgileX Scout Mini autonomous mobile robot"/>}
     {type === "dog" && <svg viewBox="0 0 400 210"><path d="M95 69h200l35 31-25 43H118L78 111Z" className="machine-fill"/><circle cx="295" cy="97" r="14" fill="#020617" stroke="#60a5fa" strokeWidth="3"/><path d="m119 137-31 54m72-50-15 51m145-51 17 51m-2-56 47 52" fill="none" stroke="#94a3b8" strokeWidth="13" strokeLinecap="round"/><path d="M71 193h32m28 0h29m133 0h30m18-3h33" stroke="#3b82f6" strokeWidth="8"/></svg>}
     {type === "arm" && <svg viewBox="0 0 400 210"><ellipse cx="202" cy="188" rx="75" ry="17" className="machine-fill"/><path d="M201 180v-52l-39-29 24-54 25 9-15 39 42 31-12 61" fill="none" stroke="#94a3b8" strokeWidth="28" strokeLinecap="round"/><circle cx="174" cy="99" r="17" fill="#2563eb"/><circle cx="200" cy="51" r="16" fill="#2563eb"/><path d="m210 44 53-18" stroke="#94a3b8" strokeWidth="18" strokeLinecap="round"/></svg>}
   </div>;
